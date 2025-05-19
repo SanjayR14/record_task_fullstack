@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { getProfiles } from '../services/profileService';
 
-// SVG Icons as React Components (assuming these are unchanged and correct)
+// --- SVG Icons (Assume these are correct and unchanged) ---
 const DiscoverIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M15 15.0005L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 const ShortlistIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M5 3V21L12 17L19 21V3H5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 const HiredIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path fillRule="evenodd" clipRule="evenodd" d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M23 21V19C22.9995 16.9567 21.4136 15.2499 19.3733 15.0507" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path fillRule="evenodd" clipRule="evenodd" d="M17 11C18.0745 11 19.0989 10.6907 19.9172 10.1343C20.3057 9.87193 20.6446 9.56088 20.9262 9.21125" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
@@ -19,9 +19,45 @@ const LocationFilterIcon = () => (<svg width="14" height="14" viewBox="0 0 24 24
 const GeneralFilterIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-gray-600"><path fillRule="evenodd" clipRule="evenodd" d="M7 7C5.89543 7 5 6.10457 5 5C5 3.89543 5.89543 3 7 3C8.10457 3 9 3.89543 9 5C9 6.10457 8.10457 7 7 7Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path fillRule="evenodd" clipRule="evenodd" d="M7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19C9 20.1046 8.10457 21 7 21Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path fillRule="evenodd" clipRule="evenodd" d="M17 14C15.8954 14 15 13.1046 15 12C15 10.8954 15.8954 10 17 10C18.1046 10 19 10.8954 19 12C19 13.1046 18.1046 14 17 14Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 5H4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M9.99683 5H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 19H4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M9.99683 19H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M21 12H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M14.0032 12H3.00003" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 const BurgerIconFull = () => ( <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg> );
 const CloseIconFull = () => ( <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> );
+// --- End SVG Icons ---
 
 const manualSkillOptions = ["React", "Node.js", "JavaScript", "Python", "MongoDB", "Google Ads", "Marketing Strategy", "Vue", "Angular", "SEO", "Content Writing", "UI/UX Design"];
 const manualLocationOptions = ["Bangalore", "Chennai", "Coimbatore", "Remote", "Hyderabad", "Pune", "Mumbai", "Delhi", "Noida"];
+
+// FilterControls component defined OUTSIDE DashboardPage
+const FilterControls = ({
+    roleFilter, onRoleChange,
+    skillsFilter, onSkillsChange,
+    locationFilter, onLocationChange
+}) => (
+    <>
+        <input 
+            type="text" 
+            placeholder="Enter Role (e.g., Developer)" 
+            className="p-2.5 h-10 border border-gray-300 rounded-md flex-1 text-sm focus:ring-1 focus:ring-brand-focus-ring focus:border-brand-focus-ring w-full md:w-auto" 
+            value={roleFilter} 
+            onChange={onRoleChange} 
+        />
+        <div className="relative flex-1 w-full md:w-auto">
+            <select value={skillsFilter} onChange={onSkillsChange} className="p-2.5 h-10 border border-gray-300 rounded-md w-full text-sm focus:ring-1 focus:ring-brand-focus-ring focus:border-brand-focus-ring appearance-none pr-8">
+                <option value="">Select Skill</option>
+                {manualSkillOptions.map(skill => (<option key={skill} value={skill}>{skill}</option>))}
+            </select>
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"><DropdownArrowIcon /></div>
+        </div>
+        <div className="relative flex-1 w-full md:w-auto">
+            <select value={locationFilter} onChange={onLocationChange} className="p-2.5 h-10 border border-gray-300 rounded-md w-full text-sm focus:ring-1 focus:ring-brand-focus-ring focus:border-brand-focus-ring appearance-none pr-8">
+                <option value="">Select Location</option>
+                {manualLocationOptions.map(loc => (<option key={loc} value={loc}>{loc}</option>))}
+            </select>
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"><DropdownArrowIcon /></div>
+        </div>
+        <button className="p-2 h-10 border border-gray-300 rounded-md flex-shrink-0 hover:bg-gray-50 w-full md:w-auto" title="More filters">
+            <GeneralFilterIcon />
+        </button>
+    </>
+);
+
 
 const DashboardPage = () => {
     const navigate = useNavigate();
@@ -122,30 +158,6 @@ const DashboardPage = () => {
         </div>
     );
 
-    const FilterControls = () => (
-        <>
-            <input type="text" placeholder="Enter Role (e.g., Developer)" className="p-2.5 h-10 border border-gray-300 rounded-md flex-1 text-sm focus:ring-1 focus:ring-brand-focus-ring focus:border-brand-focus-ring w-full md:w-auto" value={roleFilter} onChange={(e) => setRoleFilter(e.target.value)} />
-            <div className="relative flex-1 w-full md:w-auto">
-                <select value={skillsFilter} onChange={(e) => setSkillsFilter(e.target.value)} className="p-2.5 h-10 border border-gray-300 rounded-md w-full text-sm focus:ring-1 focus:ring-brand-focus-ring focus:border-brand-focus-ring appearance-none pr-8">
-                    <option value="">Select Skill</option>
-                    {manualSkillOptions.map(skill => (<option key={skill} value={skill}>{skill}</option>))}
-                </select>
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"><DropdownArrowIcon /></div>
-            </div>
-            <div className="relative flex-1 w-full md:w-auto">
-                <select value={locationFilter} onChange={(e) => setLocationFilter(e.target.value)} className="p-2.5 h-10 border border-gray-300 rounded-md w-full text-sm focus:ring-1 focus:ring-brand-focus-ring focus:border-brand-focus-ring appearance-none pr-8">
-                    <option value="">Select Location</option>
-                    {manualLocationOptions.map(loc => (<option key={loc} value={loc}>{loc}</option>))}
-                </select>
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"><DropdownArrowIcon /></div>
-            </div>
-            <button className="p-2 h-10 border border-gray-300 rounded-md flex-shrink-0 hover:bg-gray-50 w-full md:w-auto" title="More filters">
-                <GeneralFilterIcon />
-            </button>
-        </>
-    );
-
-
     return (
         <div className="min-h-screen">
             <div className={`max-w-screen-2xl-plus mx-auto flex min-h-screen lg:shadow-xl lg:my-0 max-lg:w-full max-lg:mx-0 max-lg:shadow-none`}>
@@ -219,7 +231,11 @@ const DashboardPage = () => {
                         </header>
                         {/* Desktop Filters (part of the sticky header) */}
                         <section className="flex flex-row gap-4 items-center mt-4">
-                           <FilterControls />
+                           <FilterControls 
+                                roleFilter={roleFilter} onRoleChange={(e) => setRoleFilter(e.target.value)}
+                                skillsFilter={skillsFilter} onSkillsChange={(e) => setSkillsFilter(e.target.value)}
+                                locationFilter={locationFilter} onLocationChange={(e) => setLocationFilter(e.target.value)}
+                           />
                         </section>
                     </div>
 
@@ -232,7 +248,11 @@ const DashboardPage = () => {
                     {/* Mobile Sticky Filter Section (separate from mobile header) */}
                     <div className={`md:hidden sticky top-[3.75rem] z-20 bg-white shadow-sm px-6 py-4 border-b border-gray-200`}>
                         <section className="flex flex-col gap-4 items-center">
-                            <FilterControls />
+                            <FilterControls
+                                roleFilter={roleFilter} onRoleChange={(e) => setRoleFilter(e.target.value)}
+                                skillsFilter={skillsFilter} onSkillsChange={(e) => setSkillsFilter(e.target.value)}
+                                locationFilter={locationFilter} onLocationChange={(e) => setLocationFilter(e.target.value)}
+                            />
                         </section>
                     </div>
 
