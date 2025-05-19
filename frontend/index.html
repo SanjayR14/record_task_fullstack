@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/new.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redefine the Future with Skills -Join our Waitlist</title>
+    <!-- Tailwind Play CDN Script -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Inline Tailwind Configuration for Play CDN
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'sidebar-bg': '#f0f1f1',
+              'brand-plus-icon': '#ee6211',
+              'brand-avatar-bg': '#282c41',
+              'brand-active-text': '#282c41',
+              'brand-active-icon': '#d7d9e5',
+              'brand-button': '#282c41', // Used for dashboard View Profile
+              'brand-focus-ring': '#282c41', // Used for filter focus
+              'auth-primary': '#E74C3C', // Reddish-orange for auth buttons
+              'auth-primary-hover': '#c0392b', // Darker shade for hover
+              'body-gutter-bg': '#343a40', // Dark background for page gutters (desktop dashboard)
+            },
+            borderRadius: {
+              'avatar': '20%', // Your custom avatar border radius
+            },
+            maxWidth: {
+              'screen-2xl-plus': '1600px', // Max width for centered dashboard layout
+            }
+            // You can add font families here if you have specific ones like 'Inter'
+            // fontFamily: {
+            //   sans: ['Inter', 'sans-serif'],
+            // },
+          }
+        },
+        plugins: [
+          // require('@tailwindcss/forms'), // If you were using this plugin (not available directly in Play CDN basic setup like this)
+        ],
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
