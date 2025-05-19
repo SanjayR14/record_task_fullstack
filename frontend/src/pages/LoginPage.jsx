@@ -54,7 +54,7 @@ const LoginPage = () => {
         try {
             const config = { headers: { 'Content-Type': 'application/json' } };
             const { data } = await axios.post(
-                'http://localhost:5001/api/auth/login', // Ensure your backend URL is correct
+                'https://record-task-fullstack.onrender.com/api/auth/login', // Ensure your backend URL is correct
                 { email, password },
                 config
             );

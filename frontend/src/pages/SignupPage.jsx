@@ -30,7 +30,7 @@ const SignupPage = () => {
         try {
             const config = { headers: { 'Content-Type': 'application/json' } };
             const { data } = await axios.post(
-                'http://localhost:5001/api/auth/register', // Ensure your backend URL is correct
+                'https://record-task-fullstack.onrender.com/api/auth/register', // Ensure your backend URL is correct
                 { name, email, password },
                 config
             );

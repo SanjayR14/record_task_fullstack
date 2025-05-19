@@ -1,7 +1,7 @@
 // frontend/src/services/profileService.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5001/api/profiles'; // Your backend profiles endpoint
+const API_BASE_URL = 'https://record-task-fullstack.onrender.com/api/profiles'; // Your backend profiles endpoint
 
 export const getProfiles = async (filters = {}) => {
     const config = { params: filters };
