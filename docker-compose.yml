@@ -1,0 +1,52 @@
+# record-innovation-task/docker-compose.yml
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: sanju/record-backend:latest
+    ports:
+      - "5001:5001"
+    environment:
+      PORT: 5001
+      MONGO_URI: mongodb+srv://fullstack:sanju5954f@cluster0.dshg4.mongodb.net/Record?retryWrites=true&w=majority&appName=Cluster0 # For local backend with local mongo
+      JWT_SECRET: MTZpZ3V1cWN6d3dqbWI0cG1ueHRvajRlbXZvN3p5ZTI4Y3A0NzU2NnlpaW9nN2dvemN1cTNnNnZ1aHVrdnZwbDh6eXVtMXM2bGYzaXhubzlxN2lxazkzdGlmMnZnbXo4bmFuM2U1bHh2Yjlpcnh1eWR0a2plYzJjM2l1YXVmNHk
+      NODE_ENV: development # Set to 'production' if building a production backend image
+      # CORS_ORIGIN: http://localhost:3000 # If frontend runs on host 3000 (adjust if needed)
+    depends_on:
+      - mongo
+    volumes:
+      - ./backend:/usr/src/app # Mounts for dev, remove for production image build
+      - /usr/src/app/node_modules
+    networks:
+      - app-network
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: https://record-task-fullstack.onrender.com
+    image: sanju/record-frontend:latest # Example
+    ports:
+      - "3000:80" # Map host port 3000 to Nginx container port 80
+    networks:
+      - app-network
+    # No depends_on: - backend needed if frontend always talks to the live Render backend.
+    # If you wanted the option to talk to the Dockerized backend, you'd add it
+    # and change the VITE_API_BASE_URL arg above to http://backend:5001
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
